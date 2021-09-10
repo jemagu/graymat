@@ -36,11 +36,11 @@ public class Gramat {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println(args.length);
         try {
             Set<String> dictionary = new HashSet<>();
             Set<Path> paths = new HashSet<>();
-            //paths.add(Paths.get("C:\\p\\aardvark.txt"));
-            paths.add(Paths.get("C:\\p\\svenska.txt"));
+            paths.add(Paths.get(args[1]));
             for (Path p : paths) {
                 try {
                     dictionary.addAll(Files.readAllLines(p));
@@ -48,7 +48,7 @@ public class Gramat {
                     Logger.getLogger(Gramat.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            try (Scanner s = new Scanner(new File("C:\\p\\local.txt"))) {
+            try (Scanner s = new Scanner(new File(args[2]))) {
                 while (s.hasNext()) {
                     dictionary.add(s.next().split(";")[0]);
                 }
@@ -56,9 +56,7 @@ public class Gramat {
                 Logger.getLogger(Gramat.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            //File folder = new File("C:\\p\\UFF\\Klyx\\");
-            Path folder = Paths.get("C:\\p\\UFF\\Adressreg\\");
-            //File folder = new File("C:\\p\\UFF\\Common\\");
+            Path folder = Paths.get(args[0]);
 
             final List<JavaFile> files = new ArrayList<>();
 
@@ -115,9 +113,9 @@ public class Gramat {
             System.out.println("Errors: " + errors);
             System.out.println("Count: " + dictionary.size());
 
+            System.out.println("Bad words: "+errorMap.size());
             for (Map.Entry<String, Long> entry : errorMap.entrySet()) {
-                //System.out.println(entry.getKey()+ " : " + entry.getValue());
-                System.out.println(entry.getKey());
+                System.out.println(entry.getKey()+ " : " + entry.getValue());
             }
         } catch (IOException ex) {
             Logger.getLogger(Gramat.class.getName()).log(Level.SEVERE, null, ex);
