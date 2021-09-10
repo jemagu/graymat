@@ -5,16 +5,13 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 repositories {
-    jcenter()
-    flatDir {
-       dirs 'libs'
-   }
+    mavenCentral()
 }
 
 dependencies {
-    compile 'com.github.javaparser:javaparser-core:2.2.2'  
-    testCompile 'junit:junit:4.12'
-    testCompile 'gratistester:gratistester:1.0'
+    implementation 'com.github.javaparser:javaparser-core:2.2.2'  
+    testImplementation 'junit:junit:4.12'
+    //testImplementation 'gratistester:gratistester:1.0'
 }
 
 mainClassName = 'se.gunta.graymat.Gramat'
