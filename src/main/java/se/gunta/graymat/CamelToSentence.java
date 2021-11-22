@@ -13,10 +13,8 @@ public class CamelToSentence {
         for (int i = 0; i < fixed.length(); i++) {
             if (upper.charAt(i) == fixed.charAt(i)) {
                 result.append(' ');
-                result.append(fixed.charAt(i));
-            } else {
-                result.append(fixed.charAt(i));
             }
+            result.append(fixed.charAt(i));
         }
         return result.toString().toLowerCase();
     }

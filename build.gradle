@@ -1,4 +1,4 @@
-description = 'A trivial Gradle build'
+description = 'Project Graymat'
 version = '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -11,7 +11,6 @@ repositories {
 dependencies {
     implementation 'com.github.javaparser:javaparser-core:2.2.2'  
     testImplementation 'junit:junit:4.12'
-    //testImplementation 'gratistester:gratistester:1.0'
 }
 
 mainClassName = 'se.gunta.graymat.Gramat'
