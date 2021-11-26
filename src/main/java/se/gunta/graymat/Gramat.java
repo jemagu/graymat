@@ -14,13 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,7 +54,7 @@ public class Gramat {
 
             final List<JavaFile> files = new ArrayList<>();
 
-            Files.walkFileTree(folder, new FileVisitor<Path>() {
+            Files.walkFileTree(folder, new FileVisitor<>() {
 
                 @Override
                 public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
@@ -117,6 +111,7 @@ public class Gramat {
             for (Map.Entry<String, Long> entry : errorMap.entrySet()) {
                 System.out.println(entry.getKey()+ " : " + entry.getValue());
             }
+            learn(errorMap);
         } catch (IOException ex) {
             Logger.getLogger(Gramat.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -124,8 +119,31 @@ public class Gramat {
         }
     }
 
+    private static void learn(HashMap<String, Long> errorMap) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            List<String> one = new ArrayList<>();
+            List<String> two = new ArrayList<>();
+            for (Map.Entry<String, Long> entry : errorMap.entrySet()) {
+                System.out.print("Add '" + entry.getKey() + "' to which dict? (1) Words, (2) Local or (3) None. ");
+                int anInt;
+                try {
+                    anInt = scanner.nextInt();
+                } catch (InputMismatchException ime) {
+                    continue;
+                }
+                if (anInt == 1) {
+                    one.add(entry.getKey());
+                } else if (anInt == 2) {
+                    two.add(entry.getKey());
+                }
+            }
+            one.stream().forEach(word -> System.out.println(word));
+            two.stream().forEach(word -> System.out.println(word));
+        }
+    }
+
     private static JavaFile doFile(File file) {
-        CompilationUnit cu = null;
+        CompilationUnit cu;
         try (InputStream in = new FileInputStream(file)) {
             JavaFile javaFile = new JavaFile();
             javaFile.setFileName(file.getCanonicalPath());
